@@ -17,12 +17,14 @@ class Comparator;
 class Block {
  public:
   // Initialize the block with the specified contents.
-  explicit Block(const BlockContents& contents);
+  explicit Block(const BlockContents& contents);//防止单一实参的函数发生隐形格式转化。
 
   ~Block();
 
-  size_t size() const { return size_; }
-  Iterator* NewIterator(const Comparator* comparator);
+  size_t size() const { return size_; }//在32位架构中被普遍定义为：typedef   unsigned int size_t;32
+                                       //而在64位架构中被定义为：typedef  unsigned long size_t;64
+
+ Iterator* NewIterator(const Comparator* comparator);
 
  private:
   uint32_t NumRestarts() const;
