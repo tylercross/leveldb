@@ -15,7 +15,7 @@
 
 namespace leveldb {
 
-inline uint32_t Block::NumRestarts() const {
+inline uint32_t Block::NumRestarts() const {//const 使得原始的this从常量指针变成指向常量的常量指针，可以访问const对象
   assert(size_ >= sizeof(uint32_t));
   return DecodeFixed32(data_ + size_ - sizeof(uint32_t));
 }
