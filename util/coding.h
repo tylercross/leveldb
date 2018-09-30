@@ -58,6 +58,7 @@ char* EncodeVarint64(char* dst, uint64_t value);
 // without any bounds checking.
 
 inline uint32_t DecodeFixed32(const char* ptr) {
+  //处理大小端问题，转化为小端模式。其中大端模式：低地址->高字节；小端模式：低地址->低字节。
   if (port::kLittleEndian) {
     // Load the raw bytes
     uint32_t result;
