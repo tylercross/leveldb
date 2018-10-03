@@ -34,6 +34,7 @@ class BloomFilterPolicy : public FilterPolicy {
 
   virtual void CreateFilter(const Slice* keys, int n, std::string* dst) const {
     // Compute bloom filter size (in both bits and bytes)
+    // n是键的个数？
     size_t bits = n * bits_per_key_;
 
     // For small n, we can see a very high false positive rate.  Fix it
@@ -44,7 +45,9 @@ class BloomFilterPolicy : public FilterPolicy {
     bits = bytes * 8;
 
     const size_t init_size = dst->size();
+    //将bitmap添加到 dst后面，因为dst中不止有一个bitmap
     dst->resize(init_size + bytes, 0);
+    //在bitmap后添加k_表示每个Key需要的hash运算次数
     dst->push_back(static_cast<char>(k_));  // Remember # of probes in filter
     char* array = &(*dst)[init_size];
     for (int i = 0; i < n; i++) {
